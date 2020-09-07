@@ -4,11 +4,6 @@ stages:
   - build
   - test
 
-.pre:
-  script:
-    - pecl install xdebug
-    - echo "zend_extension=/usr/lib/php/20170718/xdebug.so" >> /etc/php/7.2/cli/php.ini
-
 composer:
   stage: build
   script:
@@ -17,9 +12,7 @@ composer:
 
 test:
   script:
-    - vendor/bin/phpunit --coverage-text
-  after_script:
-    - php vendor/bin/coveralls -v
+    - vendor/bin/phpunit --textdox
 
 cache:
   # We key the cache using the branch's unique identifier.
