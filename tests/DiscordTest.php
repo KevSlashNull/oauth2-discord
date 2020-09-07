@@ -14,8 +14,9 @@ namespace Discord\OAuth\tests;
 use Discord\OAuth\Discord as DiscordProvider;
 use GuzzleHttp\Psr7\Response;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
-class DiscordTest extends \PHPUnit_Framework_TestCase
+class DiscordTest extends TestCase
 {
     protected $provider;
     protected $config = [
@@ -23,12 +24,12 @@ class DiscordTest extends \PHPUnit_Framework_TestCase
         'clientSecret' => 'mock_secret',
     ];
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->provider = new DiscordProvider($this->config);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
@@ -77,7 +78,7 @@ class DiscordTest extends \PHPUnit_Framework_TestCase
     {
         $response = json_decode('{"id": "mock_id", "username": "mock_username", "email": "mock_email", "discriminator": "mock_discrim", "avatar": "mock_avatar", "verified": true, "mfa_enabled": false}', true);
 
-        $provider = m::mock(DiscordProvider::class.'[fetchResourceOwnerDetails]')
+        $provider = m::mock(DiscordProvider::class . '[fetchResourceOwnerDetails]')
             ->shouldAllowMockingProtectedMethods();
 
         $provider->shouldReceive('fetchResourceOwnerDetails')
@@ -116,7 +117,7 @@ class DiscordTest extends \PHPUnit_Framework_TestCase
         $userResponse = json_decode('{"id": "mock_id", "username": "mock_username", "email": "mock_email", "discriminator": "mock_discrim", "avatar": "mock_avatar", "verified": true, "mfa_enabled": false}', true);
         $response = json_decode('[{"id": "mock_id1", "name": "mock_name1", "icon": "mock_icon1", "permissions": 123123, "owner": false}, {"id": "mock_id2", "name": "mock_name2", "icon": "mock_icon2", "permissions": 456456, "owner": true}]', true);
 
-        $provider = m::mock(DiscordProvider::class.'[fetchResourceOwnerDetails,request]')
+        $provider = m::mock(DiscordProvider::class . '[fetchResourceOwnerDetails,request]')
             ->shouldAllowMockingProtectedMethods();
 
         $provider->shouldReceive('fetchResourceOwnerDetails')
@@ -154,7 +155,7 @@ class DiscordTest extends \PHPUnit_Framework_TestCase
         $userResponse = json_decode('{"id": "mock_id", "username": "mock_username", "email": "mock_email", "discriminator": "mock_discrim", "avatar": "mock_avatar", "verified": true, "mfa_enabled": false}', true);
         $response = json_decode('[{"id": "mock_id1", "name": "mock_name1", "type": "mock_type1"}, {"id": "mock_id2", "name": "mock_name2", "type": "mock_type2"}]', true);
 
-        $provider = m::mock(DiscordProvider::class.'[fetchResourceOwnerDetails,request]')
+        $provider = m::mock(DiscordProvider::class . '[fetchResourceOwnerDetails,request]')
             ->shouldAllowMockingProtectedMethods();
 
         $provider->shouldReceive('fetchResourceOwnerDetails')
@@ -194,7 +195,7 @@ class DiscordTest extends \PHPUnit_Framework_TestCase
         $userResponse = json_decode('{"id": "mock_id", "username": "mock_username", "email": "mock_email", "discriminator": "mock_discrim", "avatar": "mock_avatar", "verified": true, "mfa_enabled": false}', true);
         $response = json_decode('{"code": "mock_code", "guild": {"id": "mock_id", "name": "mock_name", "splash_hash": "mock_splash_hash"}, "xkcdpass": null, "channel": {"id": "mock_id", "name": "mock_name", "type": "mock_type"}}', true);
 
-        $provider = m::mock(DiscordProvider::class.'[fetchResourceOwnerDetails,request]')
+        $provider = m::mock(DiscordProvider::class . '[fetchResourceOwnerDetails,request]')
             ->shouldAllowMockingProtectedMethods();
 
         $provider->shouldReceive('fetchResourceOwnerDetails')
@@ -238,7 +239,7 @@ class DiscordTest extends \PHPUnit_Framework_TestCase
     {
         $guzzleResponse = new Response(200, [], '{"mock": true}');
 
-        $provider = m::mock(DiscordProvider::class.'[sendRequest]')
+        $provider = m::mock(DiscordProvider::class . '[sendRequest]')
             ->shouldAllowMockingProtectedMethods();
 
         $provider->shouldReceive('sendRequest')
@@ -268,7 +269,7 @@ class DiscordTest extends \PHPUnit_Framework_TestCase
     {
         $guzzleResponse = new Response(500, [], '{"error": "mock_error"}');
 
-        $provider = m::mock(DiscordProvider::class.'[sendRequest]')
+        $provider = m::mock(DiscordProvider::class . '[sendRequest]')
             ->shouldAllowMockingProtectedMethods();
 
         $provider->shouldReceive('sendRequest')
