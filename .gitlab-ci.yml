@@ -9,7 +9,6 @@ composer:
   script:
     - composer self-update
     - composer install --no-interaction --dev
-    - composer global require "squizlabs/php_codesniffer=*"
 
 test:
   script:
@@ -17,6 +16,7 @@ test:
 
 lint:
   script:
+    - composer global require "squizlabs/php_codesniffer=*"
     - phpcs --standard=PSR2 src/
 
 cache:
