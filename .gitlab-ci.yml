@@ -24,7 +24,7 @@ lint:
 deploy:
   stage: deploy
   when: manual
-  script: curl -XPOST -H'content-type:application/json' 'https://packagist.org/api/update-package?username=KevSlashNull&apiToken=$API_TOKEN' -d'{"repository":{"url":"https://packagist.org/packages/kevslashnull/oauth2-discord"}}'
+  script: curl -XPOST -H'content-type:application/json' "https://packagist.org/api/update-package?username=KevSlashNull&apiToken=$API_TOKEN" -d'{"repository":{"url":"https://packagist.org/packages/kevslashnull/oauth2-discord"}}'
 
 cache:
   # We key the cache using the branch's unique identifier.
