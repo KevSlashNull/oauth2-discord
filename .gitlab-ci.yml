@@ -7,12 +7,16 @@ stages:
 composer:
   stage: build
   script:
+    - apt-get install phpcs -y
     - composer self-update
     - composer install --no-interaction --dev
 
 test:
   script:
     - vendor/bin/phpunit --testdox
+
+lint:
+  script: phpcs --standard=PSR2 src/
 
 cache:
   # We key the cache using the branch's unique identifier.
