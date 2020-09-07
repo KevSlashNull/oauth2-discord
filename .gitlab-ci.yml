@@ -6,8 +6,6 @@ stages:
 
 composer:
   stage: build
-  before_script:
-    - apt install composer
   script:
     - composer self-update
     - composer install --no-interaction --prefer-source --dev
