@@ -12,7 +12,7 @@ composer:
 
 test:
   script:
-    - vendor/bin/phpunit --textdox
+    - vendor/bin/phpunit --testdox
 
 cache:
   # We key the cache using the branch's unique identifier.
