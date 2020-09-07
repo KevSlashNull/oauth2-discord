@@ -17,3 +17,5 @@ test:
 cache:
   # We key the cache using the branch's unique identifier.
   key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
