@@ -16,7 +16,7 @@ test:
 
 lint:
   script:
-    - apt-get install phpcs -y
+    - apt install phpcs -y
     - phpcs --standard=PSR2 src/
 
 cache:
