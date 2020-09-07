@@ -1,12 +1,16 @@
-oauth2-discord
-===
-[![Build Status](https://travis-ci.org/teamreflex/oauth2-discord.svg?branch=master)](https://travis-ci.org/teamreflex/oauth2-discord) [![Coverage Status](https://coveralls.io/repos/github/teamreflex/oauth2-discord/badge.svg?branch=master)](https://coveralls.io/github/teamreflex/oauth2-discord?branch=master)
+# oauth2-discord
+
+![Build Status](https://gitlab.com/SiegeGG/discord-oauth2/badges/master/pipeline.svg)
+
+Enables PHP-based websites (such as Laravel ones) to use Discord as login and/or register system.
+
+This repo is a **fork of [team-reflex/oauth2-discord](https://github.com/teamreflex/oauth2-discord)**. Team Reflex' package was last updated on Oct 7, 2016 and we at SiegeGG need an updated version. We'll possibly add more non-breaking features but will try to leave the package fully backwards compatible.
 
 Provides Discord OAuth 2.0 support for PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
 ## Installation
 
-Run `composer require team-reflex/oauth2-discord`.
+Run `composer require kevslashnull/oauth2-discord`.
 
 ## Usage
 
@@ -19,7 +23,7 @@ $provider = new \Discord\OAuth\Discord([
 	'redirectUri'  => 'http://your.redirect.url',
 ]);
 
-if (! isset($_GET['code'])) {
+if (!isset($_GET['code'])) {
 	echo '<a href="'.$provider->getAuthorizationUrl().'">Login with Discord</a>';
 } else {
 	$token = $provider->getAccessToken('authorization_code', [
@@ -34,7 +38,7 @@ if (! isset($_GET['code'])) {
 	$connections = $user->connections;
 
 	// Accept an invite
-	$invite = $user->acceptInvite('https://discord.gg/0SBTUU1wZTUo9F8v');
+	$invite = $user->acceptInvite('https://discord.gg/52a9dsR');
 
 	// Get a refresh token
 	$refresh = $provider->getAccessToken('refresh_token', [
@@ -47,6 +51,7 @@ if (! isset($_GET['code'])) {
 
 ## Credits
 
+- @KevSlashNull at [SiegeGG](https://gitlab.com/SiegeGG)
 - [David Cole](https://github.com/uniquoooo)
 - [All Contributors](https://github.com/teamreflex/oauth2-discord/contributors)
 
