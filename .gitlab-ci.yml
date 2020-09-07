@@ -17,7 +17,7 @@ test:
 lint:
   script:
     - composer global require "squizlabs/php_codesniffer=*"
-    - phpcs --standard=PSR2 src/
+    - vendor/bin/phpcs --standard=PSR2 src/
 
 cache:
   # We key the cache using the branch's unique identifier.
