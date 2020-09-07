@@ -8,7 +8,7 @@ composer:
   stage: build
   script:
     - composer self-update
-    - composer install --no-interaction --prefer-source --dev
+    - composer install --no-interaction --dev
 
 test:
   script:
