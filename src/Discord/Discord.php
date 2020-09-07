@@ -45,7 +45,7 @@ class Discord extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        return self::BASE_API_URL.'/oauth2/authorize';
+        return self::BASE_API_URL . '/oauth2/authorize';
     }
 
     /**
@@ -53,7 +53,7 @@ class Discord extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return self::BASE_API_URL.'/oauth2/token';
+        return self::BASE_API_URL . '/oauth2/token';
     }
 
     /**
@@ -61,7 +61,7 @@ class Discord extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        return self::BASE_API_URL.'/users/@me';
+        return self::BASE_API_URL . '/users/@me';
     }
 
     /**
@@ -86,7 +86,7 @@ class Discord extends AbstractProvider
     public function getAuthorizationHeaders($token = null)
     {
         return [
-            'Authorization' => 'Bearer '.$token->getToken(),
+            'Authorization' => 'Bearer ' . $token->getToken(),
         ];
     }
 
@@ -96,7 +96,7 @@ class Discord extends AbstractProvider
     protected function checkResponse(ResponseInterface $response, $data)
     {
         if (isset($data['error'])) {
-            throw new DiscordRequestException('Error in response from Discord: '.$data['error']);
+            throw new DiscordRequestException('Error in response from Discord: ' . $data['error']);
         }
     }
 
@@ -121,7 +121,10 @@ class Discord extends AbstractProvider
     public function request($method, $url, $token, array $options = [])
     {
         $request = $this->getAuthenticatedRequest(
-            $method, $url, $token, $options
+            $method,
+            $url,
+            $token,
+            $options
         );
 
         return $this->getResponse($request);
@@ -134,7 +137,7 @@ class Discord extends AbstractProvider
      */
     public function getGuildsEndpoint()
     {
-        return self::BASE_API_URL.'/users/@me/guilds';
+        return self::BASE_API_URL . '/users/@me/guilds';
     }
 
     /**
@@ -144,7 +147,7 @@ class Discord extends AbstractProvider
      */
     public function getConnectionsEndpoint()
     {
-        return self::BASE_API_URL.'/users/@me/connections';
+        return self::BASE_API_URL . '/users/@me/connections';
     }
 
     /**
@@ -156,7 +159,7 @@ class Discord extends AbstractProvider
      */
     public function getInviteEndpoint($invite)
     {
-        return self::BASE_API_URL.'/invites/'.$invite;
+        return self::BASE_API_URL . '/invites/' . $invite;
     }
 
     /**
