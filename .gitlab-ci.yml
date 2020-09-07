@@ -3,6 +3,7 @@ image: composer:2.0
 stages:
   - build
   - test
+  - deploy
 
 composer:
   stage: build
@@ -11,12 +12,19 @@ composer:
     - composer install --no-interaction --dev
 
 test:
+  stage: test
   script:
     - vendor/bin/phpunit --testdox
 
 lint:
+  stage: test
   script:
     - vendor/bin/phpcs --standard=PSR2 src/
+
+deploy:
+  stage: deploy
+  when: manual
+  script: curl -XPOST -H'content-type:application/json' 'https://packagist.org/api/update-package?username=KevSlashNull&apiToken=$API_TOKEN' -d'{"repository":{"url":"https://packagist.org/packages/kevslashnull/oauth2-discord"}}'
 
 cache:
   # We key the cache using the branch's unique identifier.
