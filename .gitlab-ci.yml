@@ -16,7 +16,6 @@ test:
 
 lint:
   script:
-    - composer require "squizlabs/php_codesniffer=*"
     - vendor/bin/phpcs --standard=PSR2 src/
 
 cache:
