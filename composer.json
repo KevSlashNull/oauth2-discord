@@ -1,6 +1,7 @@
 {
   "name": "kevslashnull/oauth2-discord",
   "description": "OAuth2 client for authenticating with the Discord API servers",
+  "version": "7.0",
   "license": "MIT",
   "authors": [
     {
