@@ -127,7 +127,7 @@ class Discord extends AbstractProvider
             $options
         );
 
-        return $this->getResponse($request);
+        return $this->getParsedResponse($request);
     }
 
     /**

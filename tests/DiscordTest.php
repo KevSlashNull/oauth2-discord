@@ -12,6 +12,7 @@
 namespace Discord\OAuth\tests;
 
 use Discord\OAuth\Discord as DiscordProvider;
+use Discord\OAuth\DiscordRequestException;
 use GuzzleHttp\Psr7\Response;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
@@ -49,10 +50,10 @@ class DiscordTest extends TestCase
 
         $this->assertEquals($this->config['clientId'], $query['client_id']);
 
-        $this->assertContains('identify', $query['scope']);
-        $this->assertContains('email', $query['scope']);
+        $this->assertStringContainsString('identify', $query['scope']);
+        $this->assertStringContainsString('email', $query['scope']);
 
-        $this->assertAttributeNotEmpty('state', $this->provider);
+        $this->assertFalse(isset($this->provider->identify));
     }
 
     public function testBaseAccessTokenUrl()
@@ -71,7 +72,7 @@ class DiscordTest extends TestCase
         $uri = parse_url($url);
 
         $this->assertEquals('/api/users/@me', $uri['path']);
-        $this->assertNotContains('mock_access_token', $url);
+        $this->assertStringNotContainsString('mock_access_token', $url);
     }
 
     public function testUserData()
@@ -239,10 +240,10 @@ class DiscordTest extends TestCase
     {
         $guzzleResponse = new Response(200, [], '{"mock": true}');
 
-        $provider = m::mock(DiscordProvider::class . '[sendRequest]')
+        $provider = m::mock(DiscordProvider::class . '[getResponse]')
             ->shouldAllowMockingProtectedMethods();
 
-        $provider->shouldReceive('sendRequest')
+        $provider->shouldReceive('getResponse')
             ->times(1)
             ->andReturn($guzzleResponse);
 
@@ -252,27 +253,24 @@ class DiscordTest extends TestCase
             ->times(1)
             ->andReturn('mock_token');
 
+        /** @var \GuzzleHttp\Psr7\Response */
         $response = $provider->request(
             'GET',
             'mock_url',
             $token
         );
 
-        $this->assertArrayHasKey('mock', $response);
-        $this->assertEquals(true, $response['mock']);
+        $this->assertEquals(['mock' => true], $response);
     }
 
-    /**
-     * @expectedException Discord\OAuth\DiscordRequestException
-     */
     public function testResponseChecking()
     {
         $guzzleResponse = new Response(500, [], '{"error": "mock_error"}');
 
-        $provider = m::mock(DiscordProvider::class . '[sendRequest]')
+        $provider = m::mock(DiscordProvider::class . '[getResponse]')
             ->shouldAllowMockingProtectedMethods();
 
-        $provider->shouldReceive('sendRequest')
+        $provider->shouldReceive('getResponse')
             ->times(1)
             ->andReturn($guzzleResponse);
 
@@ -282,7 +280,9 @@ class DiscordTest extends TestCase
             ->times(1)
             ->andReturn('mock_token');
 
-        $response = $provider->request(
+        $this->expectException(DiscordRequestException::class);
+
+        $provider->request(
             'GET',
             'mock_url',
             $token
