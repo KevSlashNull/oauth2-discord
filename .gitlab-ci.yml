@@ -1,24 +1,21 @@
 image: composer:2.0
 
 stages:
-  - build
   - test
   - deploy
-
-composer:
-  stage: build
-  script:
-    - composer self-update
-    - composer install --no-interaction --dev
 
 test:
   stage: test
   script:
+    - composer self-update
+    - composer install --no-interaction --dev
     - vendor/bin/phpunit --testdox
 
 lint:
   stage: test
   script:
+    - composer self-update
+    - composer install --no-interaction --dev
     - vendor/bin/phpcs --standard=PSR2 src/
 
 deploy:
